@@ -5,4 +5,4 @@ robot_FINAL.py was our completed software script that ran on the Pi Zero W for t
 
 gesture_detect_FINAL.py was our completed software script that ran on the Pi 3 for the base station.
 
-Files in /test are individual scripts we wrote to test/debug various hardware components in isolation from the system as a whole.
+Files in /tests are individual scripts we wrote to test/debug various hardware components in isolation from the system as a whole.
