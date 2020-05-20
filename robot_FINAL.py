@@ -7,10 +7,12 @@ from time import sleep          #import
 
 import bluetooth
 
+# Neopixel setup
 import board
 import neopixel
 pixels = neopixel.NeoPixel(board.D18, 20)
 
+# bluetooth setup
 server_sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 port=1
 server_sock.bind(('',port)) # LEAVE MAC ADDRESS EMPTY STRING
@@ -50,6 +52,7 @@ GPIO.output(24,GPIO.LOW)
 
 t = True
 
+# initialized frequency and duty cycle
 freq = 46.5
 dc = 6.98
 
@@ -106,6 +109,7 @@ def right_stop():
     right.stop() # cut signal to servo
     right.start(0)
 
+# measurement returned by ultrasonic range sensor
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
@@ -133,6 +137,7 @@ def distance():
 
     return distance
 
+# initializing accelerometer
 def MPU_Init():
     bus.write_byte_data(Device_Address, SMPLRT_DIV, 7) #write to sample rate register
     bus.write_byte_data(Device_Address, PWR_MGMT_1, 1) #Write to power management register
@@ -153,6 +158,7 @@ def read_raw_data(addr):
         value = value - 65536
     return value
 
+# correct direction for straight line movement
 def piv_right_corr():
     right_cw()
     left_stop()
@@ -160,6 +166,7 @@ def piv_right_corr():
     right_stop()
     execute_robot_command('1')
 
+# correct direction for straight line movement
 def piv_left_corr():
     right_stop()
     left_ccw()
@@ -189,14 +196,6 @@ def execute_robot_command(s):
     elif (s == '5'): # stop
         right_stop()
         left_stop()
-
-def correct_movement():
-    #time.sleep(0.2)
-    global prev_comm
-    ### Correct robot movement ###
-    if prev_comm == "1": # only correct if robot is moving forwards
-        print("in loop")
-
 
 def valid_command():
     global command_arr
